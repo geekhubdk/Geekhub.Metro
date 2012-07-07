@@ -2,7 +2,7 @@
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
   <Identity Name="Geekhub" Publisher="CN=JesperBlad" Version="1.0.0.0" />
   <Properties>
-    <DisplayName>Geekhub.Metro</DisplayName>
+    <DisplayName>Geekhub</DisplayName>
     <PublisherDisplayName>JesperBlad</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
