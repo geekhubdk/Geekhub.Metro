@@ -100,7 +100,6 @@ namespace Geekhub.Metro
             DataRequest request = e.Request;
             request.Data.Properties.Title = meeting.Title;
             request.Data.Properties.Description = meeting.Description;
-            request.Data.SetText(meeting.Title);
             request.Data.Properties.ApplicationName = "Geekhub";
             var link = new Uri("http://geekhub.dk/meetings/" + meeting.UniqueId);
             request.Data.SetUri(link);
