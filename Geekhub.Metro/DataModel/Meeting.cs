@@ -15,5 +15,6 @@ namespace Geekhub.Metro.DataModel
         public string Url { get; set; }
         public string Organizer { get; set; }
         public bool CostsMoney { get; set; }
+        public int ID { get; set; }
     }
 }

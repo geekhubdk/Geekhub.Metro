@@ -93,6 +93,11 @@
                                             <Button x:Name="UxReadMore" Margin="0,30,0,0" Style="{StaticResource TextButtonStyle}" Click="UxReadMore_Click">Læs mere / tilmelding</Button>
                                         </InlineUIContainer>
                                     </Paragraph>
+                                    <Paragraph LineStackingStrategy="MaxHeight">
+                                        <InlineUIContainer>
+                                            <Button x:Name="UxShare" Margin="0,30,0,0" Style="{StaticResource TextButtonStyle}" Click="UxShare_Click">Del</Button>
+                                        </InlineUIContainer>
+                                    </Paragraph>
                                 </RichTextBlock>
 
                                 

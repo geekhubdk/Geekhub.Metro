@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Geekhub.Metro.DataModel;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -25,11 +27,18 @@ namespace Geekhub.Metro
     /// </summary>
     public sealed partial class ItemDetailPage : Geekhub.Metro.Common.LayoutAwarePage
     {
-        private SampleDataItem Item;
+        private MeetingDataItem Item;
 
         public ItemDetailPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager.DataRequested += this.DataRequested;
         }
 
         /// <summary>
@@ -64,13 +73,31 @@ namespace Geekhub.Metro
         /// <param name="pageState">An empty dictionary to be populated with serializable state.</param>
         protected override void SaveState(Dictionary<String, Object> pageState)
         {
-            var selectedItem = (SampleDataItem)this.flipView.SelectedItem;
+            var selectedItem = (MeetingDataItem)this.flipView.SelectedItem;
             pageState["SelectedItem"] = selectedItem.UniqueId;
         }
 
         private void UxReadMore_Click(object sender, RoutedEventArgs e)
         {
             Windows.System.Launcher.LaunchUriAsync(new Uri(Item.Url));
+        }
+
+        private void UxShare_Click(object sender, RoutedEventArgs e)
+        {
+            DataTransferManager.ShowShareUI();
+        }
+
+        private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
+        {
+            var meeting = (MeetingDataItem) flipView.SelectedItem;
+            DataRequest request = e.Request;
+            request.Data.Properties.Title = meeting.Title;
+            request.Data.Properties.Description = meeting.Description;
+            request.Data.SetText(meeting.Title);
+            request.Data.Properties.ApplicationName = "Geekhub";
+            var link = new Uri("http://geekhub.dk/meetings/" + meeting.UniqueId);
+            request.Data.SetUri(link);
+
         }
     }
 }

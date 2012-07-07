@@ -29,15 +29,15 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace Geekhub.Metro.Data
 {
     /// <summary>
-    /// Base class for <see cref="SampleDataItem"/> and <see cref="SampleDataGroup"/> that
+    /// Base class for <see cref="MeetingDataItem"/> and <see cref="MeetingDataGroup"/> that
     /// defines properties common to both.
     /// </summary>
     [Windows.Foundation.Metadata.WebHostHidden]
-    public abstract class SampleDataCommon : Geekhub.Metro.Common.BindableBase
+    public abstract class MeetingDataCommon : Geekhub.Metro.Common.BindableBase
     {
         private static Uri _baseUri = new Uri("ms-appx:///");
 
-        public SampleDataCommon(String uniqueId, String title, String subtitle, String imagePath, String description)
+        public MeetingDataCommon(string uniqueId, String title, String subtitle, String imagePath, String description)
         {
             this._uniqueId = uniqueId;
             this._title = title;
@@ -46,7 +46,7 @@ namespace Geekhub.Metro.Data
             this._imagePath = imagePath;
         }
 
-        private string _uniqueId = string.Empty;
+        private string _uniqueId;
         public string UniqueId
         {
             get { return this._uniqueId; }
@@ -82,7 +82,7 @@ namespace Geekhub.Metro.Data
             {
                 if (this._image == null && this._imagePath != null)
                 {
-                    this._image = new BitmapImage(new Uri(SampleDataCommon._baseUri, this._imagePath));
+                    this._image = new BitmapImage(new Uri(MeetingDataCommon._baseUri, this._imagePath));
                 }
                 return this._image;
             }
@@ -105,9 +105,9 @@ namespace Geekhub.Metro.Data
     /// <summary>
     /// Generic item data model.
     /// </summary>
-    public class SampleDataItem : SampleDataCommon
+    public class MeetingDataItem : MeetingDataCommon
     {
-        public SampleDataItem(String uniqueId, String title, String subtitle, String imagePath, String description, String content, SampleDataGroup group, DateTime startsAt, string url)
+        public MeetingDataItem(string uniqueId, String title, String subtitle, String imagePath, String description, String content, MeetingDataGroup group, DateTime startsAt, string url)
             : base(uniqueId, title, subtitle, imagePath, description)
         {
             this._content = content;
@@ -151,8 +151,8 @@ namespace Geekhub.Metro.Data
         }
 
 
-        private SampleDataGroup _group;
-        public SampleDataGroup Group
+        private MeetingDataGroup _group;
+        public MeetingDataGroup Group
         {
             get { return this._group; }
             set { this.SetProperty(ref this._group, value); }
@@ -165,26 +165,25 @@ namespace Geekhub.Metro.Data
             get { return this._url; }
             set { this.SetProperty(ref this._url, value); }
         }
-
     }
 
     /// <summary>
     /// Generic group data model.
     /// </summary>
-    public class SampleDataGroup : SampleDataCommon
+    public class MeetingDataGroup : MeetingDataCommon
     {
-        public SampleDataGroup(String uniqueId, String title, String subtitle, String imagePath, String description)
+        public MeetingDataGroup(string uniqueId, String title, String subtitle, String imagePath, String description)
             : base(uniqueId, title, subtitle, imagePath, description)
         {
         }
 
-        private ObservableCollection<SampleDataItem> _items = new ObservableCollection<SampleDataItem>();
-        public ObservableCollection<SampleDataItem> Items
+        private ObservableCollection<MeetingDataItem> _items = new ObservableCollection<MeetingDataItem>();
+        public ObservableCollection<MeetingDataItem> Items
         {
             get { return this._items; }
         }
         
-        public IEnumerable<SampleDataItem> TopItems
+        public IEnumerable<MeetingDataItem> TopItems
         {
             // Provides a subset of the full items collection to bind to from a GroupedItemsPage
             // for two reasons: GridView will not virtualize large items collections, and it
@@ -204,20 +203,20 @@ namespace Geekhub.Metro.Data
     {
         private static SampleDataSource _sampleDataSource = new SampleDataSource();
 
-        private ObservableCollection<SampleDataGroup> _allGroups = new ObservableCollection<SampleDataGroup>();
-        public ObservableCollection<SampleDataGroup> AllGroups
+        private ObservableCollection<MeetingDataGroup> _allGroups = new ObservableCollection<MeetingDataGroup>();
+        public ObservableCollection<MeetingDataGroup> AllGroups
         {
             get { return this._allGroups; }
         }
 
-        public static IEnumerable<SampleDataGroup> GetGroups(string uniqueId)
+        public static IEnumerable<MeetingDataGroup> GetGroups(string uniqueId)
         {
             if (!uniqueId.Equals("AllGroups")) throw new ArgumentException("Only 'AllGroups' is supported as a collection of groups");
             
             return _sampleDataSource.AllGroups;
         }
 
-        public static SampleDataGroup GetGroup(string uniqueId)
+        public static MeetingDataGroup GetGroup(string uniqueId)
         {
             // Simple linear search is acceptable for small data sets
             var matches = _sampleDataSource.AllGroups.Where((group) => group.UniqueId.Equals(uniqueId));
@@ -225,7 +224,7 @@ namespace Geekhub.Metro.Data
             return null;
         }
 
-        public static SampleDataItem GetItem(string uniqueId)
+        public static MeetingDataItem GetItem(string uniqueId)
         {
             // Simple linear search is acceptable for small data sets
             var matches = _sampleDataSource.AllGroups.SelectMany(group => group.Items).Where((item) => item.UniqueId.Equals(uniqueId));
@@ -233,7 +232,7 @@ namespace Geekhub.Metro.Data
             return null;
         }
 
-        public static SampleDataItem[] Search(string text)
+        public static MeetingDataItem[] Search(string text)
         {
             var ltext = text.ToLower();
             // Simple linear search is acceptable for small data sets
@@ -296,11 +295,11 @@ namespace Geekhub.Metro.Data
 
             foreach (var group in meetings.GroupBy(x => GetGroupKey(x)))
             {
-                var month = new SampleDataGroup(group.Key, group.Key, null, null, null);
+                var month = new MeetingDataGroup(group.Key, group.Key, null, null, null);
 
                 foreach(var meeting in group)
                 {
-                    month.Items.Add(new SampleDataItem(meeting.Url, meeting.Title, meeting.Location + " - " + meeting.Organizer, null, meeting.Description, meeting.Description, month, meeting.starts_at, meeting.Url));
+                    month.Items.Add(new MeetingDataItem(meeting.ID.ToString(), meeting.Title, meeting.Location + " - " + meeting.Organizer, null, meeting.Description, meeting.Description, month, meeting.starts_at, meeting.Url));
                 }
 
                 AllGroups.Add(month);
