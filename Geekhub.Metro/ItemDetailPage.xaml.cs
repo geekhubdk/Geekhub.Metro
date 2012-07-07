@@ -27,6 +27,7 @@ namespace Geekhub.Metro
     /// </summary>
     public sealed partial class ItemDetailPage : Geekhub.Metro.Common.LayoutAwarePage
     {
+        private DataTransferManager dataTransferManager;
         private MeetingDataItem Item;
 
         public ItemDetailPage()
@@ -37,8 +38,14 @@ namespace Geekhub.Metro
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += this.DataRequested;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            this.dataTransferManager.DataRequested -= this.DataRequested;
         }
 
         /// <summary>
@@ -59,7 +66,7 @@ namespace Geekhub.Metro
             }
 
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
-            Item = SampleDataSource.GetItem((String)navigationParameter);
+            Item = MeetingDataSource.GetItem((String)navigationParameter);
             this.DefaultViewModel["Group"] = Item.Group;
             this.DefaultViewModel["Items"] = Item.Group.Items;
             this.flipView.SelectedItem = Item;

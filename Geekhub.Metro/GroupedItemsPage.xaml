@@ -35,7 +35,7 @@
             Source="{Binding Groups}"
             IsSourceGrouped="true"
             ItemsPath="TopItems"
-            d:Source="{Binding AllGroups, Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}"/>
+            d:Source="{Binding AllGroups, Source={d:DesignInstance Type=data:MeetingDataSource, IsDesignTimeCreatable=True}}"/>
         <DataTemplate x:Key="MeetingItemTemplate">
         	<Grid HorizontalAlignment="Left" Width="250" Height="250">
         		<Border Background="#FFF8F8F8" BorderBrush="#FF0072BB" BorderThickness="0,5,0,0">

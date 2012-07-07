@@ -18,7 +18,7 @@
         <CollectionViewSource
             x:Name="itemsViewSource"
             Source="{Binding Items}"
-            d:Source="{Binding AllGroups[0].Items, Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}"/>
+            d:Source="{Binding AllGroups[0].Items, Source={d:DesignInstance Type=data:MeetingDataSource, IsDesignTimeCreatable=True}}"/>
     </Page.Resources>
 
     <!--
@@ -29,7 +29,7 @@
     <Grid
         Style="{StaticResource LayoutRootStyle}"
         DataContext="{Binding Group}"
-        d:DataContext="{Binding AllGroups[0], Source={d:DesignInstance Type=data:SampleDataSource, IsDesignTimeCreatable=True}}">
+        d:DataContext="{Binding AllGroups[0], Source={d:DesignInstance Type=data:MeetingDataSource, IsDesignTimeCreatable=True}}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>

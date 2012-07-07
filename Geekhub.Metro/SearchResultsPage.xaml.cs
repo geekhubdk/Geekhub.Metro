@@ -137,7 +137,7 @@ namespace Geekhub.Metro
                 // TODO: Respond to the change in active filter by setting this.DefaultViewModel["Results"]
                 //       to a collection of items with bindable Image, Title, Subtitle, and Description properties
 
-                this.DefaultViewModel["Results"] = SampleDataSource.Search((string)DefaultViewModel["Query"]);
+                this.DefaultViewModel["Results"] = MeetingDataSource.Search((string)DefaultViewModel["Query"]);
 
                 // Ensure results are found
                 object results;

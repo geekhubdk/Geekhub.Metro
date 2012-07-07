@@ -199,9 +199,9 @@ namespace Geekhub.Metro.Data
     /// <summary>
     /// Creates a collection of groups and items with hard-coded content.
     /// </summary>
-    public sealed class SampleDataSource
+    public sealed class MeetingDataSource
     {
-        private static SampleDataSource _sampleDataSource = new SampleDataSource();
+        private static MeetingDataSource _meetingDataSource = new MeetingDataSource();
 
         private ObservableCollection<MeetingDataGroup> _allGroups = new ObservableCollection<MeetingDataGroup>();
         public ObservableCollection<MeetingDataGroup> AllGroups
@@ -213,13 +213,13 @@ namespace Geekhub.Metro.Data
         {
             if (!uniqueId.Equals("AllGroups")) throw new ArgumentException("Only 'AllGroups' is supported as a collection of groups");
             
-            return _sampleDataSource.AllGroups;
+            return _meetingDataSource.AllGroups;
         }
 
         public static MeetingDataGroup GetGroup(string uniqueId)
         {
             // Simple linear search is acceptable for small data sets
-            var matches = _sampleDataSource.AllGroups.Where((group) => group.UniqueId.Equals(uniqueId));
+            var matches = _meetingDataSource.AllGroups.Where((group) => group.UniqueId.Equals(uniqueId));
             if (matches.Count() == 1) return matches.First();
             return null;
         }
@@ -227,7 +227,7 @@ namespace Geekhub.Metro.Data
         public static MeetingDataItem GetItem(string uniqueId)
         {
             // Simple linear search is acceptable for small data sets
-            var matches = _sampleDataSource.AllGroups.SelectMany(group => group.Items).Where((item) => item.UniqueId.Equals(uniqueId));
+            var matches = _meetingDataSource.AllGroups.SelectMany(group => group.Items).Where((item) => item.UniqueId.Equals(uniqueId));
             if (matches.Count() == 1) return matches.First();
             return null;
         }
@@ -237,12 +237,12 @@ namespace Geekhub.Metro.Data
             var ltext = text.ToLower();
             // Simple linear search is acceptable for small data sets
             var matches =
-                _sampleDataSource.AllGroups.SelectMany(group => group.Items).Where(
+                _meetingDataSource.AllGroups.SelectMany(group => group.Items).Where(
                     (item) => item.Title.ToLower().Contains(ltext));
             return matches.ToArray();
         }
 
-        public SampleDataSource()
+        public MeetingDataSource()
         {
             
             LoadData();
