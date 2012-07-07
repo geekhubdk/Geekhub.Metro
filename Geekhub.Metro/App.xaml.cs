@@ -91,5 +91,14 @@ namespace Geekhub.Metro
             await SuspensionManager.SaveAsync();
             deferral.Complete();
         }
+
+        /// <summary>
+        /// Invoked when the application is activated to display search results.
+        /// </summary>
+        /// <param name="args">Details about the activation request.</param>
+        protected override void OnSearchActivated(Windows.ApplicationModel.Activation.SearchActivatedEventArgs args)
+        {
+            Geekhub.Metro.SearchResultsPage.Activate(args.QueryText, args.PreviousExecutionState);
+        }
     }
 }

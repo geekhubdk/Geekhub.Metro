@@ -19,6 +19,9 @@
         <DefaultTile ShowName="allLogos" ShortName="geekhub" />
         <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0072BB" />
       </VisualElements>
+      <Extensions>
+        <Extension Category="windows.search" />
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>

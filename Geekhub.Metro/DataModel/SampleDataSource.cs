@@ -230,6 +230,16 @@ namespace Geekhub.Metro.Data
             return null;
         }
 
+        public static SampleDataItem[] Search(string text)
+        {
+            var ltext = text.ToLower();
+            // Simple linear search is acceptable for small data sets
+            var matches =
+                _sampleDataSource.AllGroups.SelectMany(group => group.Items).Where(
+                    (item) => item.Title.ToLower().Contains(ltext));
+            return matches.ToArray();
+        }
+
         public SampleDataSource()
         {
             
