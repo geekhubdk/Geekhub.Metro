@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="0a0b22bc-da76-4154-8179-2aa1cff957de" Publisher="CN=JesperBlad" Version="1.0.0.0" />
+  <Identity Name="Geekhub" Publisher="CN=JesperBlad" Version="1.0.0.0" />
   <Properties>
     <DisplayName>Geekhub.Metro</DisplayName>
     <PublisherDisplayName>JesperBlad</PublisherDisplayName>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Geekhub.Metro.App">
-      <VisualElements DisplayName="Geekhub.Metro" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Geekhub.Metro" ForegroundText="light" BackgroundColor="#0072BB">
+      <VisualElements DisplayName="geekhub" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Geekhub er en app som viser events som er interessante for danske udviklere." ForegroundText="light" BackgroundColor="#0072BB">
         <DefaultTile ShowName="allLogos" ShortName="geekhub" />
         <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0072BB" />
       </VisualElements>
