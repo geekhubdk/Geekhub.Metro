@@ -30,6 +30,7 @@ namespace Geekhub.Metro
         public SearchResultsPage()
         {
             this.InitializeComponent();
+        
         }
 
         /// <summary>

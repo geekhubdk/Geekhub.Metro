@@ -9,9 +9,12 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using Geekhub.Metro.DataModel;
 using Newtonsoft.Json;
+using NotificationsExtensions.TileContent;
 using Windows.ApplicationModel.Resources.Core;
+using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
@@ -262,6 +265,29 @@ namespace Geekhub.Metro.Data
                     HandleData(json);
                 }
             }
+
+
+            var tile = TileUpdateManager.CreateTileUpdaterForApplication();
+            tile.EnableNotificationQueue(true);
+
+
+            foreach(var e in AllGroups.SelectMany(x=>x.Items).OrderBy(x=>x.StartsAt).Take(4))
+            {
+                var tileContent = TileContentFactory.CreateTileWideText01();
+                tileContent.TextHeading.Text = e.Title;
+                tileContent.TextBody3.Text = e.Subtitle;
+                tileContent.TextBody1.Text = e.LongDateTime;
+
+                var squareContent = TileContentFactory.CreateTileSquareText04();
+                squareContent.TextBodyWrap.Text = e.Title;
+                tileContent.SquareContent = squareContent;
+
+                var notification = tileContent.CreateNotification();
+                notification.ExpirationTime = new DateTimeOffset(e.StartsAt);
+
+                tile.Update(notification);
+            }
+
         }
 
         private void HandleData(string json)
