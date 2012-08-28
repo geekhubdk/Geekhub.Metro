@@ -15,6 +15,7 @@ using Windows.Data.Xml.Dom;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Notifications;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
@@ -253,18 +254,26 @@ namespace Geekhub.Metro.Data
         {
             var request = WebRequest.Create("http://geekhub.herokuapp.com/api/v1/meetings");
 
-            var response = await request.GetResponseAsync();
-
-            var json = "";
-            using(var stream = response.GetResponseStream())
+            try
             {
-                using(var streamreader = new StreamReader(stream))
+
+                var response = await request.GetResponseAsync();
+
+                var json = "";
+                using(var stream = response.GetResponseStream())
                 {
-                    json = streamreader.ReadToEnd();
-                    HandleData(json);
+                    using(var streamreader = new StreamReader(stream))
+                    {
+                        json = streamreader.ReadToEnd();
+                        HandleData(json);
+                    }
                 }
             }
-
+            catch (Exception)
+            {
+                new MessageDialog("Kunne ikke hente indhold fra server.", "Der skete en fejl").ShowAsync();
+                return;
+            }
 
             var tile = TileUpdateManager.CreateTileUpdaterForApplication();
             tile.EnableNotificationQueue(true);
