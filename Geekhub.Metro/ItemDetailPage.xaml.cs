@@ -59,17 +59,23 @@ namespace Geekhub.Metro
         /// session.  This will be null the first time a page is visited.</param>
         protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
         {
-            // Allow saved page state to override the initial item to display
-            if (pageState != null && pageState.ContainsKey("SelectedItem"))
-            {
-                navigationParameter = pageState["SelectedItem"];
-            }
+            try
+            {   
+                // Allow saved page state to override the initial item to display
+                if (pageState != null && pageState.ContainsKey("SelectedItem"))
+                {
+                    navigationParameter = pageState["SelectedItem"];
+                }
 
-            // TODO: Create an appropriate data model for your problem domain to replace the sample data
-            Item = MeetingDataSource.GetItem((String)navigationParameter);
-            this.DefaultViewModel["Group"] = Item.Group;
-            this.DefaultViewModel["Items"] = Item.Group.Items;
-            this.flipView.SelectedItem = Item;
+                // TODO: Create an appropriate data model for your problem domain to replace the sample data
+                Item = MeetingDataSource.GetItem((String)navigationParameter);
+                this.DefaultViewModel["Group"] = Item.Group;
+                this.DefaultViewModel["Items"] = Item.Group.Items;
+                this.flipView.SelectedItem = Item;
+            }                
+            catch(Exception)
+            {
+            }
         }
 
         /// <summary>

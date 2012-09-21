@@ -1,5 +1,4 @@
 ﻿using Geekhub.Metro.Common;
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ApplicationSettings;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -76,6 +76,21 @@ namespace Geekhub.Metro
             // Place the frame in the current Window and ensure that it is active
             Window.Current.Content = rootFrame;
             Window.Current.Activate();
+
+            SettingsPane.GetForCurrentView().CommandsRequested += App_CommandsRequested;
+        }
+
+        void App_CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
+        {
+  
+             SettingsCommand cmd = new SettingsCommand("privacyPolicy", "Datapolitik",
+                 (x) =>
+                 {
+                     Windows.System.Launcher.LaunchUriAsync(new Uri("http://geekhub.dk/datapolitik"));
+                 });
+  
+             args.Request.ApplicationCommands.Add(cmd);
+
         }
 
         /// <summary>
