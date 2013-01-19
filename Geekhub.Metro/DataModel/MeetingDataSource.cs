@@ -275,26 +275,26 @@ namespace Geekhub.Metro.Data
                 return;
             }
 
-            var tile = TileUpdateManager.CreateTileUpdaterForApplication();
-            tile.EnableNotificationQueue(true);
+            //var tile = TileUpdateManager.CreateTileUpdaterForApplication();
+            //tile.EnableNotificationQueue(true);
 
 
-            foreach(var e in AllGroups.SelectMany(x=>x.Items).OrderBy(x=>x.StartsAt).Take(4))
-            {
-                var tileContent = TileContentFactory.CreateTileWideText01();
-                tileContent.TextHeading.Text = e.Title;
-                tileContent.TextBody3.Text = e.Subtitle;
-                tileContent.TextBody1.Text = e.LongDateTime;
+            //foreach(var e in AllGroups.SelectMany(x=>x.Items).OrderBy(x=>x.StartsAt).Take(4))
+            //{
+            //    var tileContent = TileContentFactory.CreateTileWideText01();
+            //    tileContent.TextHeading.Text = e.Title;
+            //    tileContent.TextBody3.Text = e.Subtitle;
+            //    tileContent.TextBody1.Text = e.LongDateTime;
 
-                var squareContent = TileContentFactory.CreateTileSquareText04();
-                squareContent.TextBodyWrap.Text = e.Title;
-                tileContent.SquareContent = squareContent;
+            //    var squareContent = TileContentFactory.CreateTileSquareText04();
+            //    squareContent.TextBodyWrap.Text = e.Title;
+            //    tileContent.SquareContent = squareContent;
 
-                var notification = tileContent.CreateNotification();
-                notification.ExpirationTime = new DateTimeOffset(e.StartsAt);
+            //    var notification = tileContent.CreateNotification();
+            //    notification.ExpirationTime = new DateTimeOffset(e.StartsAt);
 
-                tile.Update(notification);
-            }
+            //    tile.Update(notification);
+            //}
 
         }
 

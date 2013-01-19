@@ -10,6 +10,7 @@
     xmlns:common="using:Geekhub.Metro.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:bm="using:Bing.Maps"
     mc:Ignorable="d">
         
     <Page.Resources>
@@ -95,9 +96,14 @@
                                     </Paragraph>
                                     <Paragraph LineStackingStrategy="MaxHeight">
                                         <InlineUIContainer>
-                                            <Button x:Name="UxShare" Margin="0,30,0,0" Style="{StaticResource TextButtonStyle}" Click="UxShare_Click">Del</Button>
+                                            <bm:Map x:Name="myMap" Height="320" HorizontalAlignment="Stretch" Credentials="Aj7bCnF-FsIu6wMCPhWhIhIF22uxissR3IteRTuy25VYENbih9oxdbnHILsGhYc7" MapType="Aerial" ZoomLevel="12">
+                                                <bm:Map.Center>
+                                                    <bm:Location Latitude="46.227480" Longitude="-122.192955" />
+                                                </bm:Map.Center>
+                                            </bm:Map>
                                         </InlineUIContainer>
                                     </Paragraph>
+                                    
                                 </RichTextBlock>
 
                                 
@@ -112,6 +118,8 @@
                                     </DataTemplate>
                                 </common:RichTextColumns.ColumnTemplate>
                             </common:RichTextColumns>
+
+
 
                             <VisualStateManager.VisualStateGroups>
 
