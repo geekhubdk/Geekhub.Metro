@@ -91,19 +91,23 @@
                                     </Paragraph>
                                     <Paragraph LineStackingStrategy="MaxHeight">
                                         <InlineUIContainer>
-                                            <Button x:Name="UxReadMore" Margin="0,30,0,0" Style="{StaticResource TextButtonStyle}" Click="UxReadMore_Click">Læs mere / tilmelding</Button>
+                                            <Border Margin="0,0,0,50">
+                                            <Button Foreground="black" BorderBrush="Black" x:Name="UxReadMore" Margin="0,30,0,0" Click="UxReadMore_Click">Læs mere / tilmelding</Button>
+                                            </Border>
                                         </InlineUIContainer>
                                     </Paragraph>
                                     <Paragraph LineStackingStrategy="MaxHeight">
                                         <InlineUIContainer>
-                                            <bm:Map x:Name="myMap" Height="320" HorizontalAlignment="Stretch" Credentials="Aj7bCnF-FsIu6wMCPhWhIhIF22uxissR3IteRTuy25VYENbih9oxdbnHILsGhYc7" MapType="Aerial" ZoomLevel="12">
-                                                <bm:Map.Center>
-                                                    <bm:Location Latitude="46.227480" Longitude="-122.192955" />
-                                                </bm:Map.Center>
+                                            <bm:Map  
+                                                x:Name="UxMap" 
+                                                Loaded="UxMap_OnLoaded" 
+                                                Height="320" Width="320" 
+                                                Credentials="Aj7bCnF-FsIu6wMCPhWhIhIF22uxissR3IteRTuy25VYENbih9oxdbnHILsGhYc7" 
+                                                MapType="Road"  ZoomLevel="14">
+
                                             </bm:Map>
                                         </InlineUIContainer>
                                     </Paragraph>
-                                    
                                 </RichTextBlock>
 
                                 

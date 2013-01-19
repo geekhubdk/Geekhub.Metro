@@ -1,4 +1,5 @@
-﻿using Geekhub.Metro.Common;
+﻿using Bing.Maps;
+using Geekhub.Metro.Common;
 using Geekhub.Metro.Data;
 
 using System;
@@ -40,6 +41,8 @@ namespace Geekhub.Metro
             base.OnNavigatedTo(e);
             dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += this.DataRequested;
+
+            
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -110,6 +113,15 @@ namespace Geekhub.Metro
             var link = new Uri("http://geekhub.dk/meetings/" + meeting.UniqueId);
             request.Data.SetUri(link);
 
+        }
+
+        private void UxMap_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var map = sender as Bing.Maps.Map;
+            var pushpin = new Bing.Maps.Pushpin();
+            MapLayer.SetPosition(pushpin, map.Center);
+            map.Children.Add(pushpin);
+            map.Center = new Location(Item.Latitude, Item.Longtitude);
         }
     }
 }

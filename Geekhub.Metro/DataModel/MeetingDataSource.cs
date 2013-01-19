@@ -38,13 +38,15 @@ namespace Geekhub.Metro.Data
     {
         private static Uri _baseUri = new Uri("ms-appx:///");
 
-        public MeetingDataCommon(string uniqueId, String title, String subtitle, String imagePath, String description)
+        public MeetingDataCommon(string uniqueId, String title, String subtitle, String imagePath, String description, double latitude, double longtitude)
         {
             this._uniqueId = uniqueId;
             this._title = title;
             this._subtitle = subtitle;
             this._description = description;
             this._imagePath = imagePath;
+            this._latitude = latitude;
+            this._longtitude = longtitude;
         }
 
         private string _uniqueId;
@@ -73,6 +75,20 @@ namespace Geekhub.Metro.Data
         {
             get { return this._description; }
             set { this.SetProperty(ref this._description, value); }
+        }
+
+        private double _latitude = 0;
+        public double Latitude
+        {
+            get { return this._latitude; }
+            set { this.SetProperty(ref this._latitude, value); }
+        }
+
+        private double _longtitude = 0;
+        public double Longtitude
+        {
+            get { return this._longtitude; }
+            set { this.SetProperty(ref this._longtitude, value); }
         }
 
         private ImageSource _image = null;
@@ -108,8 +124,8 @@ namespace Geekhub.Metro.Data
     /// </summary>
     public class MeetingDataItem : MeetingDataCommon
     {
-        public MeetingDataItem(string uniqueId, String title, String subtitle, String imagePath, String description, String content, MeetingDataGroup group, DateTime startsAt, string url)
-            : base(uniqueId, title, subtitle, imagePath, description)
+        public MeetingDataItem(string uniqueId, String title, String subtitle, String imagePath, String description, String content, MeetingDataGroup group, DateTime startsAt, string url, double latitude, double longtitude)
+            : base(uniqueId, title, subtitle, imagePath, description, latitude, longtitude)
         {
             this._content = content;
             this._group = group;
@@ -173,8 +189,8 @@ namespace Geekhub.Metro.Data
     /// </summary>
     public class MeetingDataGroup : MeetingDataCommon
     {
-        public MeetingDataGroup(string uniqueId, String title, String subtitle, String imagePath, String description)
-            : base(uniqueId, title, subtitle, imagePath, description)
+        public MeetingDataGroup(string uniqueId, String title, String subtitle, String imagePath, String description, double latitude, double longtitude)
+            : base(uniqueId, title, subtitle, imagePath, description, latitude, longtitude)
         {
         }
 
@@ -304,11 +320,11 @@ namespace Geekhub.Metro.Data
 
             foreach (var group in meetings.GroupBy(x => GetGroupKey(x)))
             {
-                var month = new MeetingDataGroup(group.Key, group.Key, null, null, null);
+                var month = new MeetingDataGroup(group.Key, group.Key, null, null, null, 0, 0);
 
                 foreach(var meeting in group)
                 {
-                    month.Items.Add(new MeetingDataItem(meeting.ID.ToString(), meeting.Title, meeting.Location + " - " + meeting.Organizer, null, meeting.Description, meeting.Description, month, meeting.starts_at, meeting.Url));
+                    month.Items.Add(new MeetingDataItem(meeting.ID.ToString(), meeting.Title, meeting.Location + " - " + meeting.Organizer, null, meeting.Description, meeting.Description, month, meeting.starts_at, meeting.Url, meeting.Latitude, meeting.Longtitude));
                 }
 
                 AllGroups.Add(month);

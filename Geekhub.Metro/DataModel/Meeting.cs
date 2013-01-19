@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bing.Maps;
 
 namespace Geekhub.Metro.DataModel
 {
@@ -16,5 +17,7 @@ namespace Geekhub.Metro.DataModel
         public string Organizer { get; set; }
         public bool CostsMoney { get; set; }
         public int ID { get; set; }
+        public double Latitude { get; set; }
+        public double Longtitude { get; set; }
     }
 }
