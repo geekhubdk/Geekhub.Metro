@@ -145,6 +145,10 @@ namespace Geekhub.Metro.Data
             get { return this.StartsAt.ToString("dddd 'den' dd. MMMM", new CultureInfo("da-dk")); }
         }
 
+		public string ShortDateTime {
+			get { return this.StartsAt.ToString("dd MMMM', kl:' HH:mm", new CultureInfo("da-dk")); }
+		}
+
         public string LongDateTime
         {
             get { return this.StartsAt.ToString("dddd 'den' dd. MMMM', kl:' HH:mm", new CultureInfo("da-dk")); }

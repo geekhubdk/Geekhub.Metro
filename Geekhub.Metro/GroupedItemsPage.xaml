@@ -37,18 +37,18 @@
             ItemsPath="TopItems"
             d:Source="{Binding AllGroups, Source={d:DesignInstance Type=data:MeetingDataSource, IsDesignTimeCreatable=True}}"/>
         <DataTemplate x:Key="MeetingItemTemplate">
-        	<Grid HorizontalAlignment="Left" Width="250" Height="250">
+        	<Grid HorizontalAlignment="Left" Width="300" Height="180">
         		<Border Background="#FFF8F8F8" BorderBrush="#FF0072BB" BorderThickness="0,5,0,0">
         		    <Border Background="#FFF8F8F8" BorderBrush="#C6C6C6" BorderThickness="1,0,1,1">
 						<StackPanel>
-							<TextBlock TextWrapping="Wrap" Text="{Binding LongDate}" FontSize="21.333" VerticalAlignment="Center" Foreground="#FF111111" Margin="15,11,15,0"/>
-							<TextBlock Text="{Binding Title}" Foreground="#FF111111" Style="{StaticResource TitleTextStyle}" Height="175" FontSize="24"  Margin="15,15,15,15" LineHeight="26.667"/>
+							<TextBlock TextWrapping="Wrap" Text="{Binding Title}" FontSize="24" Style="{StaticResource TitleTextStyle}" VerticalAlignment="Center" Foreground="#FF111111" Margin="15,11,15,0"/>
+							<TextBlock Text="{Binding ShortDateTime}" Foreground="#FF111111"  Height="175" FontSize="20" Margin="15,20,15,15" LineHeight="26.667"/>
 						</StackPanel>
                     </Border>
                 </Border>
         		<StackPanel VerticalAlignment="Bottom">
-        			
-        			<TextBlock Text="{Binding Subtitle}" Foreground="#FF111111" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
+
+					<TextBlock Text="{Binding Subtitle}" FontSize="13" Foreground="#FF111111" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
         		</StackPanel>
         	</Grid>
         </DataTemplate>
@@ -66,14 +66,16 @@
         </Grid.RowDefinitions>
 
         <!-- Back button and page title -->
-        <Grid>
+		<Grid Background="{StaticResource ContainerGradient}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
             <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"/>
-        </Grid>
+			<Image Source="Assets/smalllogo.png" Grid.Column="1" HorizontalAlignment="Right" Margin="0,15,0,61" />
+		</Grid>
 
         <!-- Horizontal scrolling grid used in most view states -->
         <GridView
@@ -87,7 +89,13 @@
             ItemTemplate="{StaticResource MeetingItemTemplate}"
             SelectionMode="None"
             IsItemClickEnabled="True"
-            ItemClick="ItemView_ItemClick" Foreground="White">
+            ItemClick="ItemView_ItemClick">
+        	<GridView.Foreground>
+        		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        			<GradientStop Color="Black"/>
+        			<GradientStop Color="White" Offset="1"/>
+        		</LinearGradientBrush>
+        	</GridView.Foreground>
 
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>                        

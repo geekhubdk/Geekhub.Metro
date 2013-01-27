@@ -29,7 +29,8 @@ namespace Geekhub.Metro
     public sealed partial class ItemDetailPage : Geekhub.Metro.Common.LayoutAwarePage
     {
         private DataTransferManager dataTransferManager;
-        private MeetingDataItem Item;
+
+		private MeetingDataItem Item;
 
         public ItemDetailPage()
         {
@@ -72,7 +73,8 @@ namespace Geekhub.Metro
 
                 // TODO: Create an appropriate data model for your problem domain to replace the sample data
                 Item = MeetingDataSource.GetItem((String)navigationParameter);
-                this.DefaultViewModel["Group"] = Item.Group;
+				this.DefaultViewModel["Item"] = Item;
+				this.DefaultViewModel["Group"] = Item.Group;
                 this.DefaultViewModel["Items"] = Item.Group.Items;
                 this.flipView.SelectedItem = Item;
             }                

@@ -19,6 +19,12 @@
             <!-- Application-specific resources -->
 
             <x:String x:Key="AppName">Geekhub</x:String>
-        </ResourceDictionary>
+			
+			<LinearGradientBrush x:Key="ContainerGradient" EndPoint="0.5,1" StartPoint="0.5,0">
+				<GradientStop Offset="0.091"/>
+				<GradientStop Color="#FF0072BB"/>
+			</LinearGradientBrush>
+
+		</ResourceDictionary>
     </Application.Resources>
 </Application>
