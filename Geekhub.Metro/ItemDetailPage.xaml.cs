@@ -100,11 +100,6 @@ namespace Geekhub.Metro
             Windows.System.Launcher.LaunchUriAsync(new Uri(Item.Url));
         }
 
-        private void UxShare_Click(object sender, RoutedEventArgs e)
-        {
-            DataTransferManager.ShowShareUI();
-        }
-
         private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
         {
             var meeting = (MeetingDataItem) flipView.SelectedItem;
