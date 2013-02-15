@@ -10,7 +10,7 @@ namespace Geekhub.Metro.DataModel
     class Meeting
     {
         public string Title { get; set; }
-        public DateTime starts_at { get; set; }
+        public DateTime Starts_At { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
         public string Url { get; set; }

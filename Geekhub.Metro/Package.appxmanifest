@@ -18,6 +18,9 @@
       <VisualElements DisplayName="geekhub" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Geekhub er en app som viser events som er interessante for danske udviklere." ForegroundText="light" BackgroundColor="#0072BB">
         <DefaultTile ShowName="allLogos" ShortName="geekhub" WideLogo="Assets\WideLogo.png" />
         <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0072BB" />
+        <InitialRotationPreference>
+          <Rotation Preference="landscape" />
+        </InitialRotationPreference>
       </VisualElements>
       <Extensions>
         <Extension Category="windows.search" />

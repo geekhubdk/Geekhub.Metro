@@ -1,22 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Net;
-using System.Runtime.CompilerServices;
+using Geekhub.Metro.Common;
 using Geekhub.Metro.DataModel;
 using Newtonsoft.Json;
-using NotificationsExtensions.TileContent;
-using Windows.ApplicationModel.Resources.Core;
-using Windows.Data.Xml.Dom;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Notifications;
+using Windows.Foundation.Metadata;
 using Windows.UI.Popups;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -30,180 +23,188 @@ using Windows.UI.Xaml.Media.Imaging;
 namespace Geekhub.Metro.Data
 {
     /// <summary>
-    /// Base class for <see cref="MeetingDataItem"/> and <see cref="MeetingDataGroup"/> that
-    /// defines properties common to both.
+    ///     Base class for <see cref="MeetingDataItem" /> and <see cref="MeetingDataGroup" /> that
+    ///     defines properties common to both.
     /// </summary>
-    [Windows.Foundation.Metadata.WebHostHidden]
-    public abstract class MeetingDataCommon : Geekhub.Metro.Common.BindableBase
+    [WebHostHidden]
+    public abstract class MeetingDataCommon : BindableBase
     {
-        private static Uri _baseUri = new Uri("ms-appx:///");
-
-        public MeetingDataCommon(string uniqueId, String title, String subtitle, String imagePath, String description, double latitude, double longtitude)
-        {
-            this._uniqueId = uniqueId;
-            this._title = title;
-            this._subtitle = subtitle;
-            this._description = description;
-            this._imagePath = imagePath;
-            this._latitude = latitude;
-            this._longtitude = longtitude;
-        }
+        private static readonly Uri _baseUri = new Uri("ms-appx:///");
+        private string _description = string.Empty;
+        private ImageSource _image;
+        private String _imagePath;
+        private double _latitude;
+        private double _longtitude;
+        private string _subtitle = string.Empty;
+        private string _title = string.Empty;
 
         private string _uniqueId;
+
+        public MeetingDataCommon(string uniqueId, String title, String subtitle, String imagePath, String description,
+                                 double latitude, double longtitude)
+        {
+            _uniqueId = uniqueId;
+            _title = title;
+            _subtitle = subtitle;
+            _description = description;
+            _imagePath = imagePath;
+            _latitude = latitude;
+            _longtitude = longtitude;
+        }
+
         public string UniqueId
         {
-            get { return this._uniqueId; }
-            set { this.SetProperty(ref this._uniqueId, value); }
+            get { return _uniqueId; }
+            set { SetProperty(ref _uniqueId, value); }
         }
 
-        private string _title = string.Empty;
         public string Title
         {
-            get { return this._title; }
-            set { this.SetProperty(ref this._title, value); }
+            get { return _title; }
+            set { SetProperty(ref _title, value); }
         }
 
-        private string _subtitle = string.Empty;
         public string Subtitle
         {
-            get { return this._subtitle; }
-            set { this.SetProperty(ref this._subtitle, value); }
+            get { return _subtitle; }
+            set { SetProperty(ref _subtitle, value); }
         }
 
-        private string _description = string.Empty;
         public string Description
         {
-            get { return this._description; }
-            set { this.SetProperty(ref this._description, value); }
+            get { return _description; }
+            set { SetProperty(ref _description, value); }
         }
 
-        private double _latitude = 0;
         public double Latitude
         {
-            get { return this._latitude; }
-            set { this.SetProperty(ref this._latitude, value); }
+            get { return _latitude; }
+            set { SetProperty(ref _latitude, value); }
         }
 
-        private double _longtitude = 0;
         public double Longtitude
         {
-            get { return this._longtitude; }
-            set { this.SetProperty(ref this._longtitude, value); }
+            get { return _longtitude; }
+            set { SetProperty(ref _longtitude, value); }
         }
 
-        private ImageSource _image = null;
-        private String _imagePath = null;
         public ImageSource Image
         {
             get
             {
-                if (this._image == null && this._imagePath != null)
+                if (_image == null && _imagePath != null)
                 {
-                    this._image = new BitmapImage(new Uri(MeetingDataCommon._baseUri, this._imagePath));
+                    _image = new BitmapImage(new Uri(_baseUri, _imagePath));
                 }
-                return this._image;
+                return _image;
             }
 
             set
             {
-                this._imagePath = null;
-                this.SetProperty(ref this._image, value);
+                _imagePath = null;
+                SetProperty(ref _image, value);
             }
         }
 
         public void SetImage(String path)
         {
-            this._image = null;
-            this._imagePath = path;
-            this.OnPropertyChanged("Image");
+            _image = null;
+            _imagePath = path;
+            OnPropertyChanged("Image");
         }
     }
 
     /// <summary>
-    /// Generic item data model.
+    ///     Generic item data model.
     /// </summary>
     public class MeetingDataItem : MeetingDataCommon
     {
-        public MeetingDataItem(string uniqueId, String title, String subtitle, String imagePath, String description, String content, MeetingDataGroup group, DateTime startsAt, string url, double latitude, double longtitude)
+        private string _content = string.Empty;
+        private MeetingDataGroup _group;
+        private DateTime _startsAt;
+        private string _url = string.Empty;
+
+        public MeetingDataItem(string uniqueId, String title, String subtitle, String imagePath, String description,
+                               String content, MeetingDataGroup group, DateTime startsAt, string url, double latitude,
+                               double longtitude)
             : base(uniqueId, title, subtitle, imagePath, description, latitude, longtitude)
         {
-            this._content = content;
-            this._group = group;
-            this._startsAt = startsAt;
-            this._url = url;
+            _content = content;
+            _group = group;
+            _startsAt = startsAt;
+            _url = url;
         }
 
-        private DateTime _startsAt;
         public DateTime StartsAt
         {
-            get { return this._startsAt; }
-            set { this.SetProperty(ref this._startsAt, value); }
+            get { return _startsAt; }
+            set { SetProperty(ref _startsAt, value); }
         }
 
         public string LongDate
         {
-            get { return this.StartsAt.ToString("dddd 'den' dd. MMMM", new CultureInfo("da-dk")); }
+            get { return StartsAt.ToString("dddd 'den' dd. MMMM", new CultureInfo("da-dk")); }
         }
 
-		public string ShortDateTime {
-			get { return this.StartsAt.ToString("dd MMMM', kl:' HH:mm", new CultureInfo("da-dk")); }
-		}
+        public string ShortDateTime
+        {
+            get { return StartsAt.ToString("dd MMMM', kl:' HH:mm", new CultureInfo("da-dk")); }
+        }
 
         public string LongDateTime
         {
-            get { return this.StartsAt.ToString("dddd 'den' dd. MMMM', kl:' HH:mm", new CultureInfo("da-dk")); }
+            get { return StartsAt.ToString("dddd 'den' dd. MMMM', kl:' HH:mm", new CultureInfo("da-dk")); }
         }
-        
+
         public string Day
         {
-            get { return this.StartsAt.ToString("dd", new CultureInfo("da-dk")); }
+            get { return StartsAt.ToString("dd", new CultureInfo("da-dk")); }
         }
 
         public string ShortMonth
         {
-            get { return this.StartsAt.ToString("MMM", new CultureInfo("da-dk")); }
+            get { return StartsAt.ToString("MMM", new CultureInfo("da-dk")); }
         }
 
-        private string _content = string.Empty;
         public string Content
         {
-            get { return this._content; }
-            set { this.SetProperty(ref this._content, value); }
+            get { return _content; }
+            set { SetProperty(ref _content, value); }
         }
 
 
-        private MeetingDataGroup _group;
         public MeetingDataGroup Group
         {
-            get { return this._group; }
-            set { this.SetProperty(ref this._group, value); }
+            get { return _group; }
+            set { SetProperty(ref _group, value); }
         }
 
 
-        private string _url = string.Empty;
         public string Url
         {
-            get { return this._url; }
-            set { this.SetProperty(ref this._url, value); }
+            get { return _url; }
+            set { SetProperty(ref _url, value); }
         }
     }
 
     /// <summary>
-    /// Generic group data model.
+    ///     Generic group data model.
     /// </summary>
     public class MeetingDataGroup : MeetingDataCommon
     {
-        public MeetingDataGroup(string uniqueId, String title, String subtitle, String imagePath, String description, double latitude, double longtitude)
+        private readonly ObservableCollection<MeetingDataItem> _items = new ObservableCollection<MeetingDataItem>();
+
+        public MeetingDataGroup(string uniqueId, String title, String subtitle, String imagePath, String description,
+                                double latitude, double longtitude)
             : base(uniqueId, title, subtitle, imagePath, description, latitude, longtitude)
         {
         }
 
-        private ObservableCollection<MeetingDataItem> _items = new ObservableCollection<MeetingDataItem>();
         public ObservableCollection<MeetingDataItem> Items
         {
-            get { return this._items; }
+            get { return _items; }
         }
-        
+
         public IEnumerable<MeetingDataItem> TopItems
         {
             // Provides a subset of the full items collection to bind to from a GroupedItemsPage
@@ -213,34 +214,43 @@ namespace Geekhub.Metro.Data
             //
             // A maximum of 12 items are displayed because it results in filled grid columns
             // whether there are 1, 2, 3, 4, or 6 rows displayed
-            get { return this._items; }
+            get { return _items; }
         }
     }
 
     /// <summary>
-    /// Creates a collection of groups and items with hard-coded content.
+    ///     Creates a collection of groups and items with hard-coded content.
     /// </summary>
     public sealed class MeetingDataSource
     {
-        private static MeetingDataSource _meetingDataSource = new MeetingDataSource();
+        private static readonly MeetingDataSource _meetingDataSource = new MeetingDataSource();
 
-        private ObservableCollection<MeetingDataGroup> _allGroups = new ObservableCollection<MeetingDataGroup>();
+        private readonly ObservableCollection<MeetingDataGroup> _allGroups =
+            new ObservableCollection<MeetingDataGroup>();
+
+        public MeetingDataSource()
+        {
+            LoadData();
+        }
+
         public ObservableCollection<MeetingDataGroup> AllGroups
         {
-            get { return this._allGroups; }
+            get { return _allGroups; }
         }
 
         public static IEnumerable<MeetingDataGroup> GetGroups(string uniqueId)
         {
-            if (!uniqueId.Equals("AllGroups")) throw new ArgumentException("Only 'AllGroups' is supported as a collection of groups");
-            
+            if (!uniqueId.Equals("AllGroups"))
+                throw new ArgumentException("Only 'AllGroups' is supported as a collection of groups");
+
             return _meetingDataSource.AllGroups;
         }
 
         public static MeetingDataGroup GetGroup(string uniqueId)
         {
             // Simple linear search is acceptable for small data sets
-            var matches = _meetingDataSource.AllGroups.Where((group) => group.UniqueId.Equals(uniqueId));
+            IEnumerable<MeetingDataGroup> matches =
+                _meetingDataSource.AllGroups.Where((group) => group.UniqueId.Equals(uniqueId));
             if (matches.Count() == 1) return matches.First();
             return null;
         }
@@ -248,41 +258,35 @@ namespace Geekhub.Metro.Data
         public static MeetingDataItem GetItem(string uniqueId)
         {
             // Simple linear search is acceptable for small data sets
-            var matches = _meetingDataSource.AllGroups.SelectMany(group => group.Items).Where((item) => item.UniqueId.Equals(uniqueId));
+            IEnumerable<MeetingDataItem> matches =
+                _meetingDataSource.AllGroups.SelectMany(group => group.Items)
+                                  .Where((item) => item.UniqueId.Equals(uniqueId));
             if (matches.Count() == 1) return matches.First();
             return null;
         }
 
         public static MeetingDataItem[] Search(string text)
         {
-            var ltext = text.ToLower();
+            string ltext = text.ToLower();
             // Simple linear search is acceptable for small data sets
-            var matches =
+            IEnumerable<MeetingDataItem> matches =
                 _meetingDataSource.AllGroups.SelectMany(group => group.Items).Where(
                     (item) => item.Title.ToLower().Contains(ltext));
             return matches.ToArray();
         }
 
-        public MeetingDataSource()
-        {
-            
-            LoadData();
-
-        }
-
         private async void LoadData()
         {
-            var request = WebRequest.Create("http://geekhub.herokuapp.com/api/v1/meetings");
+            WebRequest request = WebRequest.Create("http://geekhub.herokuapp.com/api/v1/meetings");
 
             try
             {
+                WebResponse response = await request.GetResponseAsync();
 
-                var response = await request.GetResponseAsync();
-
-                var json = "";
-                using(var stream = response.GetResponseStream())
+                string json = "";
+                using (Stream stream = response.GetResponseStream())
                 {
-                    using(var streamreader = new StreamReader(stream))
+                    using (var streamreader = new StreamReader(stream))
                     {
                         json = streamreader.ReadToEnd();
                         HandleData(json);
@@ -299,7 +303,7 @@ namespace Geekhub.Metro.Data
             //tile.EnableNotificationQueue(true);
 
 
-            //foreach(var e in AllGroups.SelectMany(x=>x.Items).OrderBy(x=>x.StartsAt).Take(4))
+            //foreach(var e in AllGroups.SelectMany(x=>x.Items).OrderBy(x=>x.Starts_At).Take(4))
             //{
             //    var tileContent = TileContentFactory.CreateTileWideText01();
             //    tileContent.TextHeading.Text = e.Title;
@@ -311,11 +315,10 @@ namespace Geekhub.Metro.Data
             //    tileContent.SquareContent = squareContent;
 
             //    var notification = tileContent.CreateNotification();
-            //    notification.ExpirationTime = new DateTimeOffset(e.StartsAt);
+            //    notification.ExpirationTime = new DateTimeOffset(e.Starts_At);
 
             //    tile.Update(notification);
             //}
-
         }
 
         private void HandleData(string json)
@@ -326,9 +329,13 @@ namespace Geekhub.Metro.Data
             {
                 var month = new MeetingDataGroup(group.Key, group.Key, null, null, null, 0, 0);
 
-                foreach(var meeting in group)
+                foreach (Meeting meeting in group)
                 {
-                    month.Items.Add(new MeetingDataItem(meeting.ID.ToString(), meeting.Title, meeting.Location + " - " + meeting.Organizer, null, meeting.Description, meeting.Description, month, meeting.starts_at, meeting.Url, meeting.Latitude, meeting.Longtitude));
+                    month.Items.Add(new MeetingDataItem(meeting.ID.ToString(), meeting.Title,
+                                                        meeting.Location + " - " + meeting.Organizer, null,
+                                                        meeting.Description, meeting.Description, month,
+                                                        meeting.Starts_At, meeting.Url, meeting.Latitude,
+                                                        meeting.Longtitude));
                 }
 
                 AllGroups.Add(month);
@@ -337,12 +344,12 @@ namespace Geekhub.Metro.Data
 
         private string GetGroupKey(Meeting meeting)
         {
-            if(meeting.starts_at.Year == DateTime.Now.Year)
+            if (meeting.Starts_At.Year == DateTime.Now.Year)
             {
-                return meeting.starts_at.ToString("MMMM", new CultureInfo("da-dk"));
+                return meeting.Starts_At.ToString("MMMM", new CultureInfo("da-dk"));
             }
 
-            return meeting.starts_at.ToString("MMMM yyyy", new CultureInfo("da-dk"));
+            return meeting.Starts_At.ToString("MMMM yyyy", new CultureInfo("da-dk"));
         }
     }
 }
