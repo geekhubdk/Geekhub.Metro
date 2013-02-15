@@ -107,11 +107,10 @@
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
                             <Grid Margin="1,0,0,6">
-                                <Button
+                                <TextBlock
                                     AutomationProperties.Name="Group Title"
-                                    Content="{Binding Title}"
-                                    Click="Header_Click"
-                                    Style="{StaticResource TextButtonStyle}"/>
+                                    Text="{Binding MonthName}"
+                                    Style="{StaticResource SubheaderTextStyle}"/>
                             </Grid>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
@@ -144,11 +143,10 @@
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
                             <Grid Margin="7,7,0,0">
-                                <Button
+                                <TextBlock
                                     AutomationProperties.Name="Group Title"
-                                    Content="{Binding Title}"
-                                    Click="Header_Click"
-                                    Style="{StaticResource TextButtonStyle}"/>
+                                    Text="{Binding Title}"
+                                    Style="{StaticResource SubheaderTextStyle}"/>
                             </Grid>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>

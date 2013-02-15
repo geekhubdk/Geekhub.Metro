@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bing.Maps;
 
 namespace Geekhub.Metro.DataModel
 {
-    class Meeting
+    internal class Meeting
     {
         public string Title { get; set; }
         public DateTime Starts_At { get; set; }
