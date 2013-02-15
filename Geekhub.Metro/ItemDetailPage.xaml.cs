@@ -120,10 +120,10 @@ namespace Geekhub.Metro
         private void UxMap_OnLoaded(object sender, RoutedEventArgs e)
         {
             var map = sender as Bing.Maps.Map;
+            map.Center = new Location(Item.Latitude, Item.Longtitude);
             var pushpin = new Bing.Maps.Pushpin();
             MapLayer.SetPosition(pushpin, map.Center);
             map.Children.Add(pushpin);
-            map.Center = new Location(Item.Latitude, Item.Longtitude);
         }
     }
 }

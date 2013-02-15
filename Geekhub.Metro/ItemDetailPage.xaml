@@ -105,7 +105,7 @@
                                     Grid.Column="1"  
 									VerticalAlignment="Center"
 									x:Name="UxMap" 
-                                    Loaded="UxMap_OnLoaded" 
+                                    Loaded="UxMap_OnLoaded"
                                     Height="400" Width="400" 
                                     Credentials="Aj7bCnF-FsIu6wMCPhWhIhIF22uxissR3IteRTuy25VYENbih9oxdbnHILsGhYc7" 
                                     MapType="Road"  ZoomLevel="14">
